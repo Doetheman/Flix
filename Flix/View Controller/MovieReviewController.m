@@ -66,7 +66,8 @@
     NSDictionary *movie = self.movies[indexPath.row];
     cell.movieTitleLabel.text = movie[@"title"];
     cell.synopsisLabe.text =movie[@"overview"];
-    
+    NSString *baseURLString = @"https://image.tmdb.org/t/p/w500";
+    NSString *posterURLString = movie
     //cell.textLabel.text = movie[@"title"];
    
     return cell;
