@@ -5,10 +5,12 @@
 //  Created by Dorian Holmes on 6/27/18.
 //  Copyright © 2018 Dorian Holmes. All rights reserved.
 //
-
+#import "MovieCell.h"
 #import "MovieReviewController.h"
 
-@interface MovieReviewController ()
+@interface MovieReviewController () <UITableViewDataSource, UITableViewDelegate>
+
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (nonatomic, strong) NSArray *movies;
 
@@ -18,6 +20,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
     // Do any additional setup after loading the view.
     
     NSURL *url = [NSURL URLWithString:@"https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed"];
@@ -31,10 +36,11 @@
             NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
             
             NSLog(@"%@", dataDictionary);
-            NSArray *movies = dataDictionary[@"results"];
-            for ( NSDictionary *movie in movies ) {
+            self.movies = dataDictionary[@"results"];
+            for ( NSDictionary *movie in self.movies ) {
                 NSLog(@"%@", movie[@"title"]);
             }
+            [self.tableView reloadData];
             // TODO: Get the array of movies
             // TODO: Store the movies in a property to use elsewhere
             // TODO: Reload your table view data
@@ -48,6 +54,23 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return self.movies.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    MovieCell *cell = [tableView dequeueReusableCellWithIdentifier:@"movieCell"];
+
+    
+    NSDictionary *movie = self.movies[indexPath.row];
+    cell.movieTitleLabel.text = movie[@"title"];
+    cell.synopsisLabe.text =movie[@"overview"];
+    
+    //cell.textLabel.text = movie[@"title"];
+   
+    return cell;
+}
 
 /*
 #pragma mark - Navigation
@@ -58,5 +81,6 @@
     // Pass the selected object to the new view controller.
 }
 */
+
 
 @end
