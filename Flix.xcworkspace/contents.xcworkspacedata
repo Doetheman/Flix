@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:/Users/restlessd/Desktop/Day2/Flix/Flix/View Controller/MediaViewController.h">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/restlessd/Desktop/Day2/Flix/Flix/View Controller/MediaViewController.m">
+   </FileRef>
+   <FileRef
       location = "group:Flix.xcodeproj">
    </FileRef>
    <FileRef

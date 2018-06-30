@@ -6,6 +6,8 @@
 //  Copyright © 2018 Dorian Holmes. All rights reserved.
 //
 #import "MovieCell.h"
+#import "MediaViewController.h"
+#import "DetailViewController.h"
 #import "MovieReviewController.h"
 #import "UIImageView+AFNetworking.h" //more methods :D
 @interface MovieReviewController () <UITableViewDataSource, UITableViewDelegate>
@@ -13,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) UIRefreshControl *refreshControl; //Refresh variable
 @property (nonatomic, strong) NSArray *movies;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loading;
 
 @end
 
@@ -41,6 +44,7 @@
             NSLog(@"%@", [error localizedDescription]);
         }
         else {
+             [self.loading startAnimating];
             NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
             
             // TODO: Store the movies in a property to use elsewhere
@@ -50,11 +54,17 @@
             for ( NSDictionary *movie in self.movies ) {
                 NSLog(@"%@", movie[@"title"]);
             }
+           
             // TODO: Reload your table view data
             [self.tableView reloadData];
+            // Start the activity indicator
+          
+            
         }
         [self.refreshControl endRefreshing];
-    }];
+        // Stop the activity indicator
+        // Hides automatically if "Hides When Stopped" is enabled
+        [self.loading stopAnimating];    }];
     [task resume];
     
 }
@@ -88,15 +98,19 @@
     return cell;
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    UITableViewCell *tappedCell = sender;
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
+    NSDictionary *movie = self.movies[indexPath.row];
+    DetailViewController *detailViewController = [segue destinationViewController];
+    detailViewController.movie = movie;
+    
 }
-*/
-
 
 @end
