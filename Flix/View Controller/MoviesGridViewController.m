@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong, nonatomic) NSArray *filteredData;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @end
 
@@ -40,7 +41,9 @@
     CGFloat itemWidth = (self.collectionView.frame.size.width -  layout.minimumInteritemSpacing*(postersPerLine-1))/postersPerLine;
     CGFloat itemHeight = itemWidth * 2;
     layout.itemSize = CGSizeMake(itemWidth, itemHeight);
-    
+    // Stop the activity indicator
+    // Hides automatically if "Hides When Stopped" is enabled
+    [self.activityIndicator stopAnimating];
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
@@ -64,7 +67,10 @@
 
 
 - (void)fetchMovies{
-   
+    // Start the activity indicator
+    [self.activityIndicator startAnimating];
+    
+  
     
         NSURL *url = [NSURL URLWithString:@"https://api.themoviedb.org/3/movie/106912/similar?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];

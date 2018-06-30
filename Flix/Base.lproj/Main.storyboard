@@ -109,6 +109,10 @@
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
+                                <activityIndicatorView key="backgroundView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" id="QxS-ed-VkV">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="547"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </activityIndicatorView>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MovieCollectionCell" id="hfm-Ty-Lxi" customClass="MovieCollectionCell">
                                         <rect key="frame" x="0.0" y="0.0" width="150" height="196"/>
@@ -138,6 +142,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="TBy-pI-KzG"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="QxS-ed-VkV" id="FWt-4X-1oP"/>
                         <outlet property="collectionView" destination="Y25-bC-Ouk" id="T23-1v-abj"/>
                         <outlet property="searchBar" destination="h5w-Ke-hU3" id="7i5-Ae-HhE"/>
                     </connections>
